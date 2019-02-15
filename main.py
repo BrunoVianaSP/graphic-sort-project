@@ -8,20 +8,21 @@ vec = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.
 
 random.shuffle(vec)
 
+def need_swap(array, cur_index, bef_index):
+    return array[cur_index] > array[bef_index]
+
+def swap(array, cur_index, bef_index):
+    swap = array[cur_index]
+    array[cur_index] = array[bef_index]
+    array[bef_index] = swap 
+
 ### Normal ###
 def insertion_sort(array):    
-    swap = 0
-    stop = False        
-    for marker in range(1, len(array)):        
-        if stop:
-            break        
+    for marker in range(1, len(array)):                
         for index in range(marker, 0, -1):                    
-            if array[index] > array[index - 1]:
-                swap = array[index]
-                array[index] = array[index - 1]
-                array[index - 1] = swap                        
-                stop = True
-            
+            if need_swap(array, index, index - 1):
+                swap(array, array, index, index - 1)                        
+                return
     
 def selection_sort(array):        
     stop = False    
