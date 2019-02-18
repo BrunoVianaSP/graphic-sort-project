@@ -27,23 +27,20 @@ def selection_sort(array):
     for marker in range(0, len(array) - 1):                
         small = array[marker]                    
         for index in range(marker + 1, len(array)):            
-            if small < array[index]:                
-                small = array[index]                
-                array[index] = array[marker]
-                array[marker] = small
+            if need_swap(array, index, marker):                
+                swap(array, index, marker)
                 return
 
 def insertion_sort(array):
     for marker in range(1, len(array)):                
         for index in range(marker, 0, -1):                    
-            if need_swap(array, index, index - 1):
-                swap(array, index, index - 1)                        
+            bef_index = index - 1
+            if need_swap(array, index, bef_index):
+                swap(array, index, bef_index)                        
                 return
     
 def shell_sort(array):    
     stop = False
-    swap = 0
-    
     h = 1
     while h < len(array) / 3: 
         h = 3 * h + 1		
@@ -51,16 +48,25 @@ def shell_sort(array):
         for i in range(h, len(array)):                        
             if stop:
                 break
-            for j in range(i, h - 1, -h):                
-                if array[j] > array[j - h]:				
-                    swap = array[j]
-                    array[j] = array[j - h]
-                    array[j - h] = swap
+            for j in range(i, h - 1, -h):
+                bef_index = j - h                
+                if need_swap(array, j, bef_index):				
+                    swap(array, j, bef_index)
                     stop = True                                                                
         h = h / 3		
-
         
 ### By Step ###
+def selection_sort_by_step(array):        
+    stop = False    
+    for marker in range(0, len(array) - 1):                
+        small = array[marker]                           
+        for index in range(marker + 1, len(array)):            
+            if stop:
+                break        
+            if need_swap(array, index, marker):                
+                swap(array, index, marker)
+                stop = True
+
 def insertion_sort_by_step(array):    
     swap = 0
     stop = False        
@@ -74,20 +80,7 @@ def insertion_sort_by_step(array):
                 array[index - 1] = swap                        
                 stop = True
             
-    
-def selection_sort_by_step(array):        
-    stop = False    
-    for marker in range(0, len(array) - 1):                
-        small = array[marker]                           
-        for index in range(marker + 1, len(array)):            
-            if stop:
-                break        
-            if small < array[index]:                
-                small = array[index]                
-                array[index] = array[marker]
-                array[marker] = small
-                stop = True
-        
+
 def shell_sort_by_step(array):    
     stop = False
     swap = 0
